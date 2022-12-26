@@ -1,4 +1,3 @@
-import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
@@ -6,6 +5,7 @@ import { AuthCredentialsDto, CreateUserDto } from "../user/user.dto";
 import { UserEntity } from "../user/user.entity";
 import { JwtPayload } from "../shared/types/jwt-payloadTypes";
 import { Repository } from "typeorm";
+import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 
 @Injectable()
 export class AuthService {
@@ -49,6 +49,14 @@ export class AuthService {
       return { accessToken, user };
     } else {
       throw new UnauthorizedException("Incorrect login details");
+    }
+  }
+
+  public async verifyJwt(jwt: string) {
+    try {
+      return this.jwtService.verify(jwt);
+    } catch (error) {
+      throw new InternalServerErrorException();
     }
   }
 }

@@ -1,10 +1,7 @@
-import { forwardRef, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
+import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
-import { InjectRepository } from "@nestjs/typeorm";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import { Repository } from "typeorm";
 import { JwtPayload } from "../shared/types/jwt-payloadTypes";
-import { UserEntity } from "../user/user.entity";
 import { UserService } from "../user/user.service";
 
 @Injectable()

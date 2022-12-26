@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { UserEntity } from "../user/user.entity";
 import { AuthService } from "./auth.service";
 import { AuthCredentialsDto, CreateUserDto } from "../user/user.dto";
@@ -18,5 +18,10 @@ export default class AuthController {
     @Body(new EmailToLowerCasePipe()) authCredentialsDto: AuthCredentialsDto,
   ): Promise<{ accessToken: string; user: UserEntity }> {
     return this.authService.signIn(authCredentialsDto);
+  }
+
+  @Get("/verifyJwt")
+  verify(@Body() jwt: string) {
+    return this.authService.verifyJwt(jwt);
   }
 }
