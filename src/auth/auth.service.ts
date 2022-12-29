@@ -3,7 +3,7 @@ import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
 import { AuthCredentialsDto, CreateUserDto } from "../user/user.dto";
 import { UserEntity } from "../user/user.entity";
-import { JwtPayload } from "../shared/types/jwt-payloadTypes";
+import { JwtPayload } from "./types/jwt-payloadTypes";
 import { Repository } from "typeorm";
 import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 
