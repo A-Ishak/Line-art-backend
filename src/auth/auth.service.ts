@@ -40,13 +40,13 @@ export class AuthService {
     }
   }
 
-  public async signIn(authCredentialsDto: AuthCredentialsDto): Promise<{ accessToken: string; user: UserEntity }> {
+  public async signIn(authCredentialsDto: AuthCredentialsDto): Promise<{ jwt: string; user: UserEntity }> {
     const { email, password } = authCredentialsDto;
     const user = await this.usersRepository.findOneBy({ email: email });
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload: JwtPayload = { email };
-      const accessToken = this.jwtService.sign(payload);
-      return { accessToken, user };
+      const jwt = this.jwtService.sign(payload);
+      return { jwt, user };
     } else {
       throw new UnauthorizedException("Incorrect login details");
     }

@@ -9,13 +9,23 @@ export class UserService {
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
   ) {}
+
   public async getUserByEmail(email: string): Promise<UserEntity> {
-    return this.userRepository.findOneOrFail({ where: { email: email } });
+    const user = await this.userRepository.findOneByOrFail({
+      email: email,
+    });
+    return user;
   }
 
-  public async checkJWTValidity(email: string) {
-    if (await this.userRepository.findOneBy({ email: email })) {
-      return "true";
-    }
+  public async getUserById(id: string): Promise<UserEntity> {
+    const user = await this.userRepository.findOneByOrFail({ id: id });
+    console.log(user);
+    return user;
+  }
+
+  public async getAllUsers(): Promise<UserEntity[]> {
+    console.log("allusers");
+    const allUsers = await this.userRepository.find({});
+    return allUsers;
   }
 }

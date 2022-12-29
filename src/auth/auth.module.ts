@@ -10,7 +10,7 @@ import { UserEntity } from "../user/user.entity";
 
 @Module({
   imports: [
-    forwardRef(() => UserModule),
+    UserModule,
     TypeOrmModule.forFeature([UserEntity]),
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
@@ -23,6 +23,6 @@ import { UserEntity } from "../user/user.entity";
 
   providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
-  exports: [JwtStrategy, PassportModule],
+  exports: [JwtStrategy, PassportModule, AuthService],
 })
 export class AuthModule {}

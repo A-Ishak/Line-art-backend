@@ -8,13 +8,17 @@ import {
   PrimaryColumn,
   Unique,
 } from "typeorm";
-import { IsEmail } from "class-validator";
+import { IsEmail, IsUUID } from "class-validator";
 
 @Entity({ name: "User" })
 @Unique(["email"])
 export class UserEntity {
-  @PrimaryColumn({ unique: true })
+  @PrimaryGeneratedColumn("uuid")
+  @IsUUID()
+  id: string;
+
   @IsEmail()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -27,5 +31,5 @@ export class UserEntity {
   lastName: string;
 
   @CreateDateColumn({ name: "created_at" })
-  createdAt?: Date;
+  createdAt: Date;
 }
