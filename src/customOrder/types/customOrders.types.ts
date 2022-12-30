@@ -1,16 +1,16 @@
-export enum EProductSizes {
+export enum ECustomOrderSizes {
   SMALL = "Small",
   MEDIUM = "Medium",
   LARGE = "Large",
 }
 
-export enum EPrintTypes {
+export enum ECustomPrintTypes {
   DIGITAL = "Digital",
   CANVAS = "Canvas",
   PRINT = "Print",
 }
 
-export enum EProductCompletionStatus {
+export enum ECustomOrderCompletionStatus {
   IN_PROGRESS = "In Progress",
   SHIPPED = "Shipped",
   COMPLETED = "Completed",

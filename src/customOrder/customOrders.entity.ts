@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, Unique } from "typeorm";
 import { IsEmail, IsUUID } from "class-validator";
-import { EPrintTypes, EProductCompletionStatus, EProductSizes } from "./types/purchases.types";
+import { ECustomOrderCompletionStatus, ECustomOrderSizes, ECustomPrintTypes } from "./types/customOrders.types";
 
-@Entity({ name: "Product" })
-export class ProductEntity {
+@Entity({ name: "CustomOrders" })
+export class CustomOrderEntity {
   @PrimaryGeneratedColumn("uuid")
   @IsUUID()
   id: string;
@@ -13,16 +13,13 @@ export class ProductEntity {
   name: string;
 
   @Column()
-  size: EProductSizes;
+  size: ECustomOrderSizes;
 
   @Column()
-  printType: EPrintTypes;
+  printType: ECustomPrintTypes;
 
   @Column()
-  completionStatus: EProductCompletionStatus;
-
-  @Column()
-  imageFilePath: string;
+  completionStatus: ECustomOrderCompletionStatus;
 
   @CreateDateColumn({ name: "created_at" })
   purchaseDate: Date;
