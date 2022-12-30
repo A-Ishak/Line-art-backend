@@ -14,4 +14,17 @@ export enum ECustomOrderCompletionStatus {
   IN_PROGRESS = "In Progress",
   SHIPPED = "Shipped",
   COMPLETED = "Completed",
+  CANCELED = "Canceled",
+}
+
+export interface CreateCustomOrderDto {
+  userId: string;
+
+  size?: ECustomOrderSizes;
+
+  printType: ECustomPrintTypes;
+
+  title: string;
+
+  images: string;
 }

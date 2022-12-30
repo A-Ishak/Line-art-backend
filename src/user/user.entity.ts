@@ -7,8 +7,12 @@ import {
   JoinColumn,
   PrimaryColumn,
   Unique,
+  JoinTable,
+  ManyToMany,
 } from "typeorm";
 import { IsEmail, IsUUID } from "class-validator";
+import { ProductEntity } from "src/products/products.entity";
+import { CustomOrderEntity } from "src/customOrder/customOrders.entity";
 
 @Entity({ name: "User" })
 @Unique(["email"])
@@ -29,6 +33,13 @@ export class UserEntity {
 
   @Column()
   lastName: string;
+
+  @ManyToMany(() => ProductEntity)
+  @JoinTable()
+  productOrder: ProductEntity[];
+
+  @OneToMany(() => CustomOrderEntity, (customOrder) => customOrder.user)
+  customOrders: CustomOrderEntity[];
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;

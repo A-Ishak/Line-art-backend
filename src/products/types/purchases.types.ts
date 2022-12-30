@@ -14,4 +14,5 @@ export enum EProductCompletionStatus {
   IN_PROGRESS = "In Progress",
   SHIPPED = "Shipped",
   COMPLETED = "Completed",
+  CANCELED = "Canceled",
 }
