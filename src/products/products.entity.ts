@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, Unique } from "typeorm";
-import { IsEmail, IsUUID } from "class-validator";
-import { EPrintTypes, EProductCompletionStatus, EProductSizes } from "./types/purchases.types";
+import { IsEmail, IsString, IsUUID } from "class-validator";
+import { EPrintTypes, EProductCompletionStatus, EProductSizes } from "./types/products.types";
 
 @Entity({ name: "Product" })
 export class ProductEntity {
@@ -10,7 +10,11 @@ export class ProductEntity {
 
   @IsEmail()
   @Column({ unique: true })
-  name: string;
+  customerEmail: string;
+
+  @IsString()
+  @Column()
+  productName: string;
 
   @Column()
   size: EProductSizes;

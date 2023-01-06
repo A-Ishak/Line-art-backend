@@ -18,13 +18,18 @@ export enum ECustomOrderCompletionStatus {
 }
 
 export interface CreateCustomOrderDto {
-  userId: string;
+  customerEmail: string;
 
-  size?: ECustomOrderSizes;
+  size: ECustomOrderSizes;
 
   printType: ECustomPrintTypes;
 
   title: string;
 
   images: string;
+}
+
+export interface UpdateCustomOrderStatusDto {
+  orderId: string;
+  newCompletionStatus: ECustomOrderCompletionStatus;
 }

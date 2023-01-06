@@ -1,7 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, Unique, ManyToOne } from "typeorm";
-import { IsEmail, IsUUID } from "class-validator";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
+import { IsEmail, IsString, IsUUID } from "class-validator";
 import { ECustomOrderCompletionStatus, ECustomOrderSizes, ECustomPrintTypes } from "./types/customOrders.types";
-import { UserEntity } from "src/user/user.entity";
 
 @Entity({ name: "CustomOrders" })
 export class CustomOrderEntity {
@@ -11,10 +10,11 @@ export class CustomOrderEntity {
 
   @IsEmail()
   @Column({ unique: true })
-  title: string;
+  customerEmail: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.customOrders)
-  user: UserEntity;
+  @IsString()
+  @Column()
+  title: string;
 
   @Column()
   size: ECustomOrderSizes;

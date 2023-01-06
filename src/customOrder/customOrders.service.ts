@@ -1,33 +1,44 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { create } from "domain";
-import { EProductCompletionStatus } from "src/products/types/purchases.types";
-import { UserService } from "src/user/user.service";
 import { Repository } from "typeorm";
 import { CustomOrderEntity } from "./customOrders.entity";
-import { CreateCustomOrderDto, ECustomOrderCompletionStatus } from "./types/customOrders.types";
+import {
+  CreateCustomOrderDto,
+  ECustomOrderCompletionStatus,
+  UpdateCustomOrderStatusDto,
+} from "./types/customOrders.types";
 
 @Injectable()
 export class CustomOrdersService {
   constructor(
     @InjectRepository(CustomOrderEntity)
-    private customOrderEntity: Repository<CustomOrderEntity>,
-    private userService: UserService,
+    private customOrderEntityRepository: Repository<CustomOrderEntity>,
   ) {}
 
   public async createNewCustomOrder(createCustomOrderDto: CreateCustomOrderDto): Promise<CustomOrderEntity> {
     const newCustomOrder = new CustomOrderEntity();
-    const user = await this.userService.getUserById(createCustomOrderDto.userId);
 
-    newCustomOrder.user = user;
+    newCustomOrder.customerEmail = createCustomOrderDto.customerEmail;
     newCustomOrder.completionStatus = ECustomOrderCompletionStatus.IN_PROGRESS;
     newCustomOrder.printType = createCustomOrderDto.printType;
+    newCustomOrder.size = createCustomOrderDto.size;
     newCustomOrder.images = createCustomOrderDto.images;
     newCustomOrder.title = createCustomOrderDto.title;
-    if (createCustomOrderDto.size) {
-      newCustomOrder.size = createCustomOrderDto.size;
-    }
-    this.customOrderEntity.save(newCustomOrder);
+    await this.customOrderEntityRepository.save(newCustomOrder);
     return newCustomOrder;
+  }
+
+  public async updateOrderStatus(updateCustomOrderStatusDto: UpdateCustomOrderStatusDto): Promise<CustomOrderEntity> {
+    const customOrder = await this.customOrderEntityRepository.findOneByOrFail({
+      id: updateCustomOrderStatusDto.orderId,
+    });
+    customOrder.completionStatus = updateCustomOrderStatusDto.newCompletionStatus;
+    try {
+      await this.customOrderEntityRepository.save(customOrder);
+    } catch (error) {
+      console.log(error);
+    }
+    //this.notificationService.sendStatusUpdate(customOrder.customerEmail)
+    return customOrder;
   }
 }

@@ -1,17 +1,12 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { AuthModule } from "./auth/auth.module";
 import { CustomOrderEntity } from "./customOrder/customOrders.entity";
 import { CustomOrdersModule } from "./customOrder/customOrders.module";
 import { ProductEntity } from "./products/products.entity";
 import { ProductsModule } from "./products/products.module";
-import { UserEntity } from "./user/user.entity";
-import { UserModule } from "./user/user.module";
 
 @Module({
   imports: [
-    UserModule,
-    AuthModule,
     ProductsModule,
     CustomOrdersModule,
     TypeOrmModule.forRoot({
@@ -23,7 +18,7 @@ import { UserModule } from "./user/user.module";
       database: "Line-Art-Backend",
       autoLoadEntities: true,
       synchronize: true,
-      entities: [UserEntity, ProductEntity, CustomOrderEntity],
+      entities: [ProductEntity, CustomOrderEntity],
     }),
   ],
 })

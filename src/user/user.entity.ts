@@ -38,9 +38,6 @@ export class UserEntity {
   @JoinTable()
   productOrder: ProductEntity[];
 
-  @OneToMany(() => CustomOrderEntity, (customOrder) => customOrder.user)
-  customOrders: CustomOrderEntity[];
-
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 }
