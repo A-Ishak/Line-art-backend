@@ -24,21 +24,25 @@ export class CustomOrdersService {
     newCustomOrder.size = createCustomOrderDto.size;
     newCustomOrder.images = createCustomOrderDto.images;
     newCustomOrder.title = createCustomOrderDto.title;
+
     await this.customOrderEntityRepository.save(newCustomOrder);
     return newCustomOrder;
   }
 
+  public async getOrderById(id: string) {
+    return await this.customOrderEntityRepository.findOneByOrFail({ id: id });
+  }
+
   public async updateOrderStatus(updateCustomOrderStatusDto: UpdateCustomOrderStatusDto): Promise<CustomOrderEntity> {
-    const customOrder = await this.customOrderEntityRepository.findOneByOrFail({
-      id: updateCustomOrderStatusDto.orderId,
-    });
-    customOrder.completionStatus = updateCustomOrderStatusDto.newCompletionStatus;
+    const customOrder = await this.getOrderById(updateCustomOrderStatusDto.orderId);
+    customOrder.completionStatus = updateCustomOrderStatusDto.updatedStatus;
     try {
       await this.customOrderEntityRepository.save(customOrder);
     } catch (error) {
       console.log(error);
     }
-    //this.notificationService.sendStatusUpdate(customOrder.customerEmail)
+    //this.notificationService.sendStatusUpdate(customOrder.customerEmail,
+    // customOrder.status(this will trigger different email depending on what it is))
     return customOrder;
   }
 }

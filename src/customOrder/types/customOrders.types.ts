@@ -30,6 +30,6 @@ export interface CreateCustomOrderDto {
 }
 
 export interface UpdateCustomOrderStatusDto {
+  updatedStatus: ECustomOrderCompletionStatus;
   orderId: string;
-  newCompletionStatus: ECustomOrderCompletionStatus;
 }

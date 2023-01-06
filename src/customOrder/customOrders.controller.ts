@@ -1,4 +1,4 @@
-import { Body, Controller, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
 import { CustomOrderEntity } from "./customOrders.entity";
 import { CustomOrdersService } from "./customOrders.service";
 import { CreateCustomOrderDto, UpdateCustomOrderStatusDto } from "./types/customOrders.types";
@@ -20,5 +20,13 @@ export class CustomOrdersController {
     updateCustomOrderStatusDto: UpdateCustomOrderStatusDto,
   ): Promise<CustomOrderEntity> {
     return this.customOrdersService.updateOrderStatus(updateCustomOrderStatusDto);
+  }
+
+  @Get("/getCustomOrderById/:id")
+  public async getUserByEmail(
+    @Param("id")
+    id: string,
+  ): Promise<CustomOrderEntity> {
+    return this.customOrdersService.getOrderById(id);
   }
 }
