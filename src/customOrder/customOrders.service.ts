@@ -43,7 +43,7 @@ export class CustomOrdersService {
     }
     //this.notificationService.sendStatusUpdate(customOrder.customerEmail,
     // customOrder.status  <-This will update the order status
-    // )
+    //)
     return customOrder;
   }
 }
