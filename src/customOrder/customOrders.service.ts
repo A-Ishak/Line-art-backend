@@ -42,7 +42,8 @@ export class CustomOrdersService {
       console.log(error);
     }
     //this.notificationService.sendStatusUpdate(customOrder.customerEmail,
-    // customOrder.status(this will trigger different email depending on what it is))
+    // customOrder.status(This will update the order status )
+    //)
     return customOrder;
   }
 }
